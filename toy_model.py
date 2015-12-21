@@ -48,6 +48,7 @@ def get_hash_to_search(array_np):
 
 
 def main():
+
     global  array_original
     array_original = np.array(
         [[2,2,0,2,0,0],
