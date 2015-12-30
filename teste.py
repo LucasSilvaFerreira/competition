@@ -1,4 +1,5 @@
 __author__ = 'lucas'
+from tqdm import tqdm
 from skimage.transform import resize
 from scipy.spatial import distance
 import sys
@@ -74,15 +75,9 @@ def get_hash_to_search(array_np):
     return get_black_points
 
 
-
-
-
-
-
-
 def main():
     global fig_for_out
-    imagem = '/home/lucas/PycharmProjects/competition/CCLab-MSC-HE.jpg'
+    imagem = '/home/lucas/PycharmProjects/competition/17218396409_591a8376c5_o.jpg'
     fig_for_out = resize(imread(imagem), (300,400))
     io.imshow(fig_for_out)
     io.show()
@@ -131,12 +126,13 @@ def main():
     print 'MArcando grafico:'
     for cluster_marcar in clusters_hash.values():
         for marcar_x in cluster_marcar:
-            if len(cluster_marcar) > 7:
-                rr, cc = circle(marcar_x[0], marcar_x[1], 3 )
-                fig_for_out[rr, cc] = [255,0,0]
+            if len(cluster_marcar) > 4:
+                rr, cc = circle(marcar_x[0], marcar_x[1], 1 )
+                # teria que contar apenas aqueles distantes da borda para contar
+                fig_for_out[rr, cc] = [0,255,0]
                 break
 
-    print 'Quantidade de clusters:',  len([cls for cls in clusters_hash.values() if len(cls)>7])
+    print 'Quantidade de clusters:',  len([cls for cls in clusters_hash.values() if len(cls)>4])
 
     hist(pd.DataFrame({'x': [len(c_n) for c_n in clusters_hash.values()]}))
     io.imshow(fig_for_out)
